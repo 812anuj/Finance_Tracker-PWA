@@ -1,0 +1,6 @@
+{
+    "html-to-css-autocompletion.getSelectorsFromFileTypes": [
+        "html",
+        "php"
+    ]
+}

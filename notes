@@ -1,0 +1,100 @@
+
+1. project creation
+Python -m venv venv
+./venv/Scripts/activate
+pip install django django-pwa django-crispy-forms crispy-bootstrap5
+pip install --upgrade pip
+pip freeze
+
+2. django application - (Django-5.2.18)
+/venv/Scripts/activate  -start virtual environment
+django-admin startproject mysite .
+python manage.py startapp app
+python manage.py migrate   - SQLite database is created
+
+
+3. Creat admin user
+python manage.py createsuperuser
+python manage.py runserver localhost:9000   -- runserver
+
+4. SQL cmd
+enter password
+show databases;
+create database ft_pwa_db;
+
+3. vscod terminal  - connect project to database
+pip install mysqlclient
+navigate to /mysite/settings.py add 'app' in INSTALLED_APPS, create new DATABASE , delete db.SQLite3
+python manage.py makemigrations
+python manage.py migrate
+you can check database in mysql cmd - show databases; use databasename; show tables;
+
+5. create new user since its new database
+python manage.py createsuperuser
+http:/localhost:9000/admin/login
+
+6. configuring settings.py 
+paste in settings.py STATIC_ROOT = Path.joinpath(BASE_DIR / 'static')
+                    MEDIA_URL = 'media/'
+                    MEDIA_ROOT = Path.joinpath(BASE_DIR / 'media')
+create folder named media in base directory
+
+7. configuring urls.py
+from django.conf import settings
+from django.conf.urls.static import static
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+8. in app folder models.py - make models
+pip install pillow  
+python manage.py makemigrations 
+python manage.py migrate 
+in app folder code admin.py
+create forms.py in app directory
+create urls.py in app directory
+update urls.py in mysite  ---> from django.urls import path, include  urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('app.urls')),
+]
+
+frontend start
+create templetes and static folder in app directory
+
+path('', include('pwa.urls')),  ---> add in urls.py in mysite
+
+(venv) PS E:\Anuj\MY PORJECTS\PWA> python manage.py collectstatic                                                                                              
+
+159 static files copied to 'E:\Anuj\MY PORJECTS\PWA\static'.
+(venv) PS E:\Anuj\MY PORJECTS\PWA> 
+
+
+Production
+python manage.py check --deploy   
+python manage.py shell
+>>> import secrets
+>>> from django.core.management.utils import get_random_secret_key
+>>> secrets.token_hex(50)
+>>>get_random_secret_key()
+>>> get_random_secret_key() + 'some part of generated secrets_token_hex '
+'ngm%60gatej=gq&dc=empotc-imn)vgrs^y6dlntc*v=2rqdl(4da628c93056e045ce2871688c6cb1934160ae62fd76d521c7a251114' >>>exit() --> paste in 
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = 'django-insecure-zs%ubzh_9vzy*my5bt*bot!^s@me9t3*e71(wq+u_0k6-cx+ke'
+
+then DEBUG = False
+ADD HOSTES 
+and at last add ssl commands
+
+
+to add .env file
+pip install python-decouple
+
+from decouple import config  ---> settings.py
+
+
+
+
+    render deployment
+    Start Command as:
+    gunicorn mysite.wsgi:application
+    build Command :pip install -r requirements.txt && python manage.py collectstatic --noinput
+    Copy command

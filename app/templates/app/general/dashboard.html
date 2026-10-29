@@ -1,0 +1,371 @@
+{% extends 'app/base/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+<link type="text/css" rel="stylesheet" href="{% static 'app/css/dashboard.css' %}" >
+
+
+<div class="modal fade" id="incomeModal" tabindex="-1" aria-labelledby="incomeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="incomeModalLabel">Income</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body ms-0">
+                <form id="income-form" class="income-form" method="POST" action="{% url 'create_income' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                {{ income_form|crispy }}
+
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary modal-button modal-one-submit">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="expenseModal" tabindex="-1" aria-labelledby="expenseModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="expenseModalLabel">Expense</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body ms-0">
+                <form id="expense-form" class="expense-form" method="POST" action="{% url 'create_expense' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ expense_form|crispy }}
+
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary modal-button modal-two-submit">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="categoryModal" tabindex="-1" aria-labelledby="categoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="categoryModalLabel">Category</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body ms-0">
+                <form id="category-form" class="category-form" method="POST" action="{% url 'create_category' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ category_form|crispy }}
+
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary modal-button modal-three-submit">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="updateModalLabel">Update</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body ms-0">
+                <form id="update-form" class="update-form" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                {{ update_form|crispy }}
+
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary modal-button modal-four-submit">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row container-fluid mx-auto dashboard-wrapper">
+    <div class="col px-0">
+        {% include 'app/semantics/header.html' %}
+
+        <div class="row dashboard-content pt-5 mt-lg-5">
+            <div class="col-lg-1"></div>
+
+            <div class="col-lg-7 col-md-12 dashboard-content-col-1">
+                <div class="row row-1-cards">
+                    <div class="col-lg col-md-12 card mx-lg-3 py-3 px-4 my-2">
+                        <h3 class="account-info"><i class="fa-solid fa-wallet"></i> Current Balance</h3>
+
+                        <p class="current-balance">
+                            ₹ {{ current_balance|floatformat:2 }}
+                        </p>
+
+                        <p class="update-text">
+                            Last Update
+                        </p>
+                    </div>
+
+                    <div class="col-lg col-md-12 card mx-lg-3 py-3 px-4 my-2">
+                        <h3 class="account-info"><i class="fa-solid fa-money-bill-trend-up"></i> Income Overview</h3>
+
+                        <p class="total-income">
+                            ₹ {{ total_income|floatformat:2 }}
+                        </p>
+
+                        <p class="update-text">
+                            Last Update
+                        </p>
+                    </div>
+
+                    <div class="col-lg col-md-12 card mx-lg-3 py-3 px-4 my-2">
+                        <h3 class="account-info"><i class="fa-solid fa-face-frown"></i> Spending Overview</h3>
+
+                        <p class="total-expense">
+                            ₹   {{ total_expense|floatformat:2 }}
+                        </p>
+
+                        <p class="update-text">
+                            Last Update
+                        </p>
+                    </div>
+                </div>
+
+                <div class="row row-2-cards mt-5">
+                    <div class="col-lg col-md-12 card chart-card mx-lg-3 my-2">
+                        <div class="row pt-3">
+                            <div class="col-lg col-12" style="color: #000000;">
+                                <i class="fa-solid fa-chart-column" style="color: #000000;"></i> Data Chart
+                            </div>
+
+                            <div class="col-lg col-12 text-lg-end text-center px-5" style="color: #000000;">
+                                <i class="fa-solid fa-square" style="color: rgb(70, 243, 70);"></i> Income
+                                <i class="fa-solid fa-square" style="color: rgb(255, 0, 0);"></i> Expense
+
+                            </div>
+                        </div>
+
+                        <div class="row py-4">
+                            <div class="col d-flex align-items-center">
+                                <div id="chart" style="width: 100%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row row-3-cards my-5">
+                    <div class="col-lg col-md-12 card data-card chart-card mx-lg-3 my-2">
+                        <div class="row pt-3">
+                            <div class="col" style="color: #000000;">
+                                <i class="fa-solid fa-table" style="color: #000000;"></i> Data Table
+                            </div>
+                        </div>
+
+                        <div class="table-responsive mt-3">
+                            <table class="table table-hover">
+                                <thead style="background-color: grey; border-radius: 20px;">
+                                    <tr>
+                                        <th>Designation</th>
+                                        <th>Amount</th>
+                                        <th>Category</th>
+                                        <th>Description</th>
+                                        <th>Created</th>
+                                        <th>Updated</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    {% for record in sorted_records %}
+                                    <tr class="{{ record.category.typ }}-{{ record.id }}">
+                                        <td class="record-type">{{ record.category.type }}</td>
+                                        <td class="record-amount">${{ record.amount }}</td>
+                                        <td class="record-category-name">{{ record.category.name }}</td>
+                                        <td class="record-description">{{ record.description }}</td>
+                                        <td>{{ record.created_at }}</td>
+                                        <td>{{ record.updated_at }}</td>
+
+                                        <td>
+                                            <a id="{{ record.category.type }}-{{ record.id }}" class="btn btn-primary record" href="#"
+                                            data-bs-toggle="modal" data-bs-target="#updateModal">Edit</a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-12 dashboard-content-col-2">
+                <div class="row row-4-cards">
+                    <div class="col-lg col-md-12 card mx-lg-3 py-3 px-4 my-2">
+                        <div class="left-header-section d-flex align-items-center justify-content-between">
+                            <h3 class="account-info">Income</h3>
+
+                            <i class="fa-solid fa-square-plus toggle-modal-one" data-bs-toggle="modal"
+                            data-bs-target="#incomeModal"></i>
+                        </div>
+
+                        <div class="border mb-3"></div>
+
+                        {% for income in incomes %}
+                            {% if forloop.counter0 < 3 %}
+                            <div id="inc-{{ income.id }}" class="income-data my-2 d-flex align-items-center justify-content-between">
+                                {{ income }}
+
+                                <i class="fa-solid fa-square-minus"></i>
+                            </div>
+                            {% else %}
+                            <div id="inc-{{ income.id }}" class="income-data my-2 d-flex align-items-center justify-content-between no-see">
+                            {{ income }}
+
+                            <i class="fa-solid fa-square-minus"></i>
+                            </div>
+
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if incomes.count > 3 %}
+                            <a class="see-more income-see-more" href="#">See More</a>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row row-5-cards mt-5">
+                    <div class="col-lg col-md-12 card mx-lg-3 py-3 px-4 my-2">
+                        <div class="left-header-section d-flex align-items-center justify-content-between">
+                            <h3 class="account-info">Expense</h3>
+
+                            <i class="fa-solid fa-square-plus toggle-modal-two" data-bs-toggle="modal"
+                            data-bs-target="#expenseModal"></i>
+                        </div>
+
+                        <div class="border mb-3"></div>
+
+                        {% for expense in expenses %}
+                            {% if forloop.counter0 < 3 %}
+                            <div id="exp-{{ expense.id }}" class="expense-data my-2 d-flex align-items-center justify-content-between">
+                                {{ expense }}
+
+                                <i class="fa-solid fa-square-minus"></i>
+                            </div>
+                            {% else %}
+                                <div id="exp-{{ expense.id }}" class="expense-data my-2 d-flex align-items-center justify-content-between no-see">
+                            {{ expense }}
+
+                            <i class="fa-solid fa-square-minus"></i>
+                            </div>
+
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if expenses.count > 3 %}
+                            <a class="see-more expense-see-more" href="#">See More</a>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row row-6-cards mt-5">
+                    <div class="col-lg col-md-12 card mx-lg-3 py-3 px-4 my-2">
+                        <div class="left-header-section d-flex align-items-center justify-content-between">
+                            <h3 class="account-info">Category</h3>
+
+                            <i class="fa-solid fa-square-plus toggle-modal-three" data-bs-toggle="modal"
+                            data-bs-target="#categoryModal"></i>
+                        </div>
+
+                        <div class="border mb-3"></div>
+
+                        {% for category in categories %}
+                            {% if forloop.counter0 < 3 %}
+                            <div id="cat-{{ category.id }}" class="category-data my-2 d-flex align-items-center justify-content-between">
+                                {{ category }}
+
+                                <i class="fa-solid fa-square-minus"></i>
+                            </div>
+                            {% else %}
+                                <div id="cat-{{ category.id }}" class="category-data my-2 d-flex align-items-center justify-content-between no-see">
+                            {{ category }}
+
+                            <i class="fa-solid fa-square-minus"></i>
+                            </div>
+
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if categories.count > 3 %}
+                            <a class="see-more category-see-more" href="#">See More</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-1"></div>
+        </div>
+
+        {% include 'app/semantics/footer.html' %}
+    </div>
+</div>
+
+<script src="{% static 'app/js/dashboard.js' %}"></script>
+
+<script type="text/javascript">
+    var incomeData = {{ income_data|safe }}
+    var expensesData = {{ expenses_data|safe }}
+
+    var options = {
+        chart: {
+            type: 'bar',
+            height: 350,
+        },
+        series: [{
+            name: 'Income',
+            data: incomeData,
+            color: "rgb(70, 243, 70)",
+        }, {
+            name: 'Expenses',
+            data: expensesData,
+            color: "rgb(255, 0, 0)",
+        }],
+        xaxis: {
+            categories: {{ months|safe }},
+            labels: {
+                show: true,
+            }
+        },
+        legend: {
+            show: false,
+        },
+        dataLabels: {
+            enabled: false,
+        }
+    };
+
+    var chart = new ApexCharts(document.querySelector('#chart'), options);
+    chart.render();
+
+</script>
+{% endblock content %}

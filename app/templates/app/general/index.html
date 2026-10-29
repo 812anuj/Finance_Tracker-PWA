@@ -1,0 +1,108 @@
+{% extends 'app/base/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+<link type="text/css" rel="stylesheet" href="{% static 'app/css/index.css' %}" >
+
+<div class='row container-fluid mx-auto index-wrapper'>
+    <div class='col px-0'>
+        {% include 'app/semantics/header.html' %}
+
+        <div class='row index-content'>
+            <div class='col-lg-2'></div>
+
+            <div class='col-lg col-12 index-content-col text-center'>
+                <img class='index-image' src="{% static 'app/img/logo.jpg' %}" >
+
+                <h1 class="pt-4">Finance Tracker App</h1>
+            </div>
+
+            <div class='col-lg col-12 index-content-col'>
+                <div class="row sign-log-container mx-auto pb-5">
+                    <div class="col sign-up-select active border text-center">Sign Up</div>
+                    <div class="col-1"></div>
+                    <div class="col login-select border text-center">Log In</div>
+                </div>
+
+                <div class="row forms">
+                    <div class="col d-flex justify-content-center">
+                        <form class="registration-form active-form" action="{% url 'register' %}"
+                        method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                {{ registration_form.username|as_crispy_field }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ registration_form.email|as_crispy_field }}
+                            </div>
+
+                            <div class="form-group">
+                                <div class="password-form-element">
+                                    {{ registration_form.password1|as_crispy_field }}
+                                    <span id="#id_password_1" 
+                                    class="password1_eye fa fa-fw fa-eye field-icon toggle-password"></span>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="password-form-element">
+                                    {{ registration_form.password2|as_crispy_field }}
+                                    <span id="#id_password_2" 
+                                    class="password2_eye fa fa-fw fa-eye field-icon toggle-password"></span>
+                                    
+                                </div>
+                            </div>
+
+                            <div class="form-button text-center">
+                                <button type="submit" class="form-btn">
+                                    Sign-Up
+                                </button>
+                            </div>
+                        </div>
+                        </form>
+
+                        <form class="login-form in-active-form" action="{% url 'log_in' %}"
+                        method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                {{ login_form.username|as_crispy_field }}
+                            </div>
+
+                            <div class="form-group">
+                                <div class="password-form-element">
+                                    {{ login_form.password|as_crispy_field }}
+                                    <span id="#id_password" 
+                                    class="password_eye fa fa-fw fa-eye field-icon toggle-password"></span>
+
+                                </div>
+                            </div>
+
+                            <div class="form-button text-center">
+                                <button type="submit" class="form-btn">
+                                    Log-In
+                                </button>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class='col-lg-2'></div>
+        </div>
+
+        {% include 'app/semantics/footer.html' %}
+    </div>
+</div>
+
+<script src="{% static 'app/js/index.js' %}"></script>
+
+{% endblock content %}

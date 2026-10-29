@@ -1,0 +1,112 @@
+.index-wrapper {
+    min-height: 100vh;
+}
+
+.header-row {
+    height: 6vh;
+    display: flex;
+    align-items: center;
+    background-color: black;
+}
+
+.index-content {
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+}
+
+.sign-log-container {
+    width: 80%;
+}
+
+.index-image {
+    border-radius: 50%;
+    box-shadow: 0px 4px 2px 1px white;
+    width: 100%;
+}
+
+form {
+    width: 80%;
+}
+
+.form-text {
+    color: white;
+}
+
+.form-btn {
+    padding: 10px 30px 10px 30px;
+    border-radius: 20px;
+    background-color: black;
+    border: 0;
+    width: 100%;
+}
+
+.form-btn:hover {
+    background-color: whitesmoke;
+    color: #151517;
+}
+
+.sign-up-select, .login-select {
+    padding: 10px 30px 10px 30px;
+    border-radius: 20px;
+    background-color: black;
+    cursor: pointer;
+}
+
+.sign-up-select:hover, .login-select:hover {
+    background-color: transparent;
+}
+
+.active {
+    background-color: transparent;
+}
+
+.active-form {
+    display: block;
+}
+
+.in-active-form {
+    display: none;
+}
+
+#password-form-element {
+    position: absolute;
+    width: 25%;
+}
+
+.field-icon {
+    float: right;
+    position: relative;
+    right: 2%;
+    bottom: 0%;
+    margin-top: -50px;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    height: 30px;
+    color: black;
+}
+
+.password1_eye {
+    margin-top: -158px;
+}
+
+.password2_eye {
+    margin-top: -75px;
+}
+
+/* Mobile & tablets & some pc screens*/
+@media only screen and (max-width: 1919px) {
+    .sign-up-select, .login-select {
+        font-size: 12px;
+    }
+
+    .password1_eye, .password2_eye {
+        margin-top: -50px;
+    }
+
+    .form-text {
+        color: white;
+        display: none;
+    }
+}
