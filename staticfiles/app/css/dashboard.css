@@ -1,0 +1,80 @@
+* {
+    color: #000000;
+}
+
+.header-col-left, .header-col-right, .footer-col {
+    color: #FFFFFF;
+}
+
+.dashboard-content {
+    min-height: 90vh;
+    display: flex;
+}
+
+.no-see {
+    display: none !important;
+}
+
+.modal {
+    overflow-x: hidden;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.modal-button {
+    padding: 10px 30px 10px 30px;
+    border-radius: 20px;
+    background-color: black;
+    cursor: pointer;
+    border: none;
+}
+
+.card, .data-card {
+    box-shadow: 3px 3px 1px #FFFFFF;
+}
+
+.data-card {
+    height: 40vh;
+}
+
+.account-info {
+    color: black;
+    font-weight: 800;
+    font-size: 20px;
+}
+
+.account-info i {
+    color: black;
+}
+
+.current-balance {
+    font-size: 30px;
+    color: black;
+}
+
+.total-income {
+    font-size: 30px !important;
+    color: rgb(70, 243, 70);
+}
+
+.total-expense {
+    font-size: 30px;
+    color: rgb(255, 0, 0);
+}
+
+.update-text {
+    padding-top: 30px;
+    color: black;
+}
+
+.fa-square-plus {
+    color: rgb(70, 243, 70);
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.fa-square-minus {
+    color:rgb(255, 0, 0);
+    font-size: 20px;
+    cursor: pointer;
+}

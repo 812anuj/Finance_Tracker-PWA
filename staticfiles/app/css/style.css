@@ -1,0 +1,43 @@
+html,
+body {
+    overflow-x: hidden;
+    background-color: #151517;
+}
+
+* {
+    color: white;
+    font-family: "Poppins", sans-serif;
+}
+
+::-webkit-scrollbar {
+    width: 1px;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+    border: 2px solid #ddd9d9;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #2aacf5;
+    border-radius: 1px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #2aacf5;
+}
+.header-row{
+    border-bottom: 5px double #FFFFFF;
+}
+.logo-img{
+    height: 40px;
+    width: 40px;
+}
+.fa-user-secret{
+    color: white;
+    font-size: 25px; 
+}
+.fa-right-from-bracket{
+    color: brown;
+    font-size: 25px;
+}
