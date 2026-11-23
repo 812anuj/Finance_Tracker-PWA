@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 
 from django.http import JsonResponse
-
+from django.contrib.auth.models import User
 from .forms import IncomeForm, ExpenseForm, CategoryForm, UpdateForm, RegistrationForm
 from .models import Income, Expense, Category
 
@@ -25,22 +25,47 @@ def register(request):
     return redirect('index')
 
 
+# def log_in(request):
+#     if request.method == 'POST':
+#         username = request.POST.get('username')
+#         password = request.POST.get('password')
+
+#         authenticateUser = authenticate(request, username=username, password=password)
+
+#         if authenticateUser is not None:
+#             login(request, authenticateUser)
+
+#             return JsonResponse({'success': True})
+        
+#         return JsonResponse({'success': False, 'password_error': 'Invalid username or password!'})
+    
+#     return redirect('index')
 def log_in(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
+        username_or_email = request.POST.get('username')
         password = request.POST.get('password')
 
-        authenticateUser = authenticate(request, username=username, password=password)
+        user = User.objects.filter(email=username_or_email).first()
+
+        if user:
+            username_or_email = user.username
+
+        authenticateUser = authenticate(
+            request,
+            username=username_or_email,
+            password=password
+        )
 
         if authenticateUser is not None:
             login(request, authenticateUser)
-
             return JsonResponse({'success': True})
-        
-        return JsonResponse({'success': False, 'password_error': 'Invalid username or password!'})
-    
-    return redirect('index')
 
+        return JsonResponse({
+            'success': False,
+            'password_error': 'Invalid username or password!'
+        })
+
+    return redirect('index')
 
 @login_required
 def log_out(request):

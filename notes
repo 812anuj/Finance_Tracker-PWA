@@ -90,7 +90,8 @@ pip install python-decouple
 
 from decouple import config  ---> settings.py
 
-
+regenerate the file:
+python -m pip freeze > requirements.txt
 
 
     render deployment
