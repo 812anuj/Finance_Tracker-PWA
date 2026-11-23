@@ -21,7 +21,7 @@ def register(request):
             login(request, user)
 
             return JsonResponse({'success': True})
-        
+        print(form.errors)
     return redirect('index')
 
 

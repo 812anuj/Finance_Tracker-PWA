@@ -27,7 +27,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG')
 
-ALLOWED_HOSTS =['finance-tracker-pwa.onrender.com' ]
+ALLOWED_HOSTS =['finance-tracker-pwa.onrender.com']
 # ['localhost', '127.0.0.1']
 
 # ALLOWED_HOSTS = config('ALLOWED_HOSTS').split(',')
@@ -180,7 +180,7 @@ PWA_APP_DEBUG_MODE = config('PWA_APP_DEBUG_MODE')
 PWA_SERVICE_WORKER_PATH = Path.joinpath(BASE_DIR, 'serviceworker.js')
 
 # Security settings work in production environment
-# SECURE_SSL_REDIRECT = True
+# SECURE_SSL_REDIRECT = False
 # SESSION_COOKIE_SECURE = True
 # CSRF_COOKIE_SECURE = True
 # SECURE_HSTS_SECONDS = 31536000
